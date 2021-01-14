@@ -43,13 +43,13 @@ countries <- merge(countries, list(name = 'Other', count = nrow(otherCountries))
 countries <- merge(countries, list(name = 'Without', count = nrow(withoutCountry)), all = TRUE)
 
 # sorting
-countries <- countries[order(countries$count, decreasing=TRUE), ]
-otherCountries <- otherCountries[order(otherCountries$count, decreasing=TRUE), ]
+countries <- countries[order(countries$count, decreasing = TRUE),]
+otherCountries <- otherCountries[order(otherCountries$count, decreasing = TRUE),]
 
 # 1. Open jpeg file
 jpeg(paste(getwd(), 'countries.jpg', sep = '/'), width = 1600, height = 1600)
 # 2. Create the bar
-pie(countries$count, labels = paste(countries$name, '(', countries$count, ')'), main = paste('Countries, Total:', nrow(otherCountries)), radius = 0.5)
+pie(countries$count, labels = paste(countries$name, '(', countries$count, ')'), main = paste('Countries, Uniques:', nrow(otherCountries)), radius = 0.5)
 legend('topright', legend = paste(otherCountries$name, '(', otherCountries$count, ')'))
 # 3. Close the file
 dev.off()
