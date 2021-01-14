@@ -35,17 +35,21 @@ colnames(countries) <- c('name', 'count')
 
 otherCountriesMaxCount <- sum(countries$count) / 100
 
-otherCountries <- countries %>% filter(countries$count <= otherCountriesMaxCount & countries$name != '')
-withoutCountry <- countries %>% filter(countries$name == '')
-countriesCount <- nrow(otherCountries)
+otherCountries <- countries %>% filter(count <= otherCountriesMaxCount & name != '')
+withoutCountry <- countries %>% filter(name == '')
 
-countries <- countries %>% filter(countries$count >= otherCountriesMaxCount & countries$name != '')
-countries <- merge(countries, list(name = 'Other', count = sum(otherCountries$count)), all = TRUE)
-countries <- merge(countries, list(name = 'Without', count = sum(withoutCountry$count)), all = TRUE)
+countries <- countries %>% filter(count >= otherCountriesMaxCount & name != '')
+countries <- merge(countries, list(name = 'Other', count = nrow(otherCountries)), all = TRUE)
+countries <- merge(countries, list(name = 'Without', count = nrow(withoutCountry)), all = TRUE)
+
+# sorting
+countries <- countries[order(countries$count, decreasing=TRUE), ]
+otherCountries <- otherCountries[order(otherCountries$count, decreasing=TRUE), ]
 
 # 1. Open jpeg file
-jpeg(paste(getwd(), 'countries.jpg', sep = '/'), width = 1200, height = 1000)
+jpeg(paste(getwd(), 'countries.jpg', sep = '/'), width = 1600, height = 1600)
 # 2. Create the bar
-pie(countries$count, labels = paste(countries$name, '(', countries$count, ')'), main = paste('Countries, Total:', countriesCount))
+pie(countries$count, labels = paste(countries$name, '(', countries$count, ')'), main = paste('Countries, Total:', nrow(otherCountries)), radius = 0.5)
+legend('topright', legend = paste(otherCountries$name, '(', otherCountries$count, ')'))
 # 3. Close the file
 dev.off()
