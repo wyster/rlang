@@ -39,8 +39,8 @@ otherCountries <- countries %>% filter(count <= otherCountriesMaxCount & name !=
 withoutCountry <- countries %>% filter(name == '')
 
 countries <- countries %>% filter(count >= otherCountriesMaxCount & name != '')
-countries <- merge(countries, list(name = 'Other', count = nrow(otherCountries)), all = TRUE)
-countries <- merge(countries, list(name = 'Without', count = nrow(withoutCountry)), all = TRUE)
+countries <- merge(countries, list(name = 'Other', count = sum(withoutCountry$count)), all = TRUE)
+countries <- merge(countries, list(name = 'Without', count = sum(withoutCountry$count)), all = TRUE)
 
 # sorting
 countries <- countries[order(countries$count, decreasing = TRUE),]
