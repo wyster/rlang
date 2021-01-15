@@ -4,8 +4,8 @@ library(dplyr)
 data <- read.table(
   paste(getwd(), 'data.txt', sep = '/'),
   header = TRUE,
-  sep = "\t",
-  quote = ""
+  sep = '\t',
+  quote = ''
 )
 
 # columns list
