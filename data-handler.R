@@ -1,3 +1,4 @@
+if (!require('dplyr')) install.packages('dplyr')
 library(dplyr)
 
 # read from file
